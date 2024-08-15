@@ -24,7 +24,6 @@ std::vector<user::User> DB::getUsers() {
     #ifdef DEBUG
     catch (const std::exception& e) {
         std::cout << e.what() << '\n';
-        users.clear();
         throw;
     }
     #else
