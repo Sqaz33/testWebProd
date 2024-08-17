@@ -8,7 +8,6 @@
 #include "include/db.h"
 #include "include/user.h"
 
-
 static bool userVerify(crow::request req, db::DB& db) {
     std::string auth = req.get_header_value("Authorization");
     if (auth.empty()) {
@@ -19,14 +18,16 @@ static bool userVerify(crow::request req, db::DB& db) {
     std::string d_creds = crow::utility::base64decode(creds, creds.size()); 
     size_t f = d_creds.find(':');
 
-    if (f == std::string::npos || d_creds.find('\'') != std::string::npos) {
+    if (f == std::string::npos) {
         return false;
     }
 
     std::string uname = d_creds.substr(0, f);
     std::string pword = d_creds.substr(f + 1);
-    return db.isUserExists(user::User(uname, pword));
+    auto u = user::User(uname, pword);
+    return db.isUserExists(u);
 }
+
 
 int main() {
     SetConsoleOutputCP(CP_UTF8); 
@@ -58,8 +59,11 @@ int main() {
         std::cout << u << '\n';
     }
 
-    app.bindaddr("192.168.0.102")
-    .port(8000)
+    app
+    .bindaddr("192.168.0.102")
+    .port(8001)
     .multithreaded()
     .run();
+
+    std::cout << db.isUserExists(user::User("", "asdfasdf"));
 }

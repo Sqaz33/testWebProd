@@ -10,6 +10,10 @@
 
 #define DEBUG
 
+namespace sql_tools {
+    void replace(std::string& str, const std::string& src, const std::string& dst);
+}
+
 namespace db {
 
 class DB {

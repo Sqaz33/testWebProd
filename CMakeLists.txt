@@ -8,6 +8,7 @@ project(testWeb)
 
 find_package(libpqxx CONFIG REQUIRED)
 find_package(Crow CONFIG REQUIRED)
+find_package(libmodbus CONFIG REQUIRED)
 
 
 add_executable( testWB 
@@ -19,5 +20,5 @@ target_link_libraries(testWB PRIVATE
     libpqxx::pqxx 
     Crow::Crow
     asio::asio
+    modbus
 )
-
