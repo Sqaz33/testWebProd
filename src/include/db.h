@@ -23,11 +23,11 @@ public:
     DB(const DB&) = delete;
     DB& operator=(const DB&) = delete;
 
-    DB(DB&& other) :
+    DB(DB&& other) noexcept :
         con(std::move(other.con))
     {}
     
-    DB& operator=(DB&& other) {
+    DB& operator=(DB&& other) noexcept {
         con = std::move(other.con);
     }
 
@@ -39,7 +39,7 @@ public:
 private:
     pqxx::connection con;
 };
-
-}
+ 
+} // namespace db
 
 #endif // SRC_INCLUDE_DB_H
